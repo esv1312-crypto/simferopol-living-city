@@ -218,6 +218,13 @@ for _, x in ipairs({-105, -75, 105, 135}) do
     light.Parent = station:FindFirstChild("Lamp lantern")
 end
 
-station:SetAttribute("BuildStage", "Architectural_Pass_02")
+-- Move the complete station away from the default player spawn.
+-- The previous layout surrounded the world origin, so a player spawning at (0, 0, 0)
+-- could appear inside/behind the building instead of seeing its facade.
+-- Rotate the front arcade toward the spawn/forecourt approach.
+local sceneTransform = CFrame.new(0, 0, -130) * CFrame.Angles(0, math.rad(180), 0)
+station:PivotTo(sceneTransform * station:GetPivot())
+
+station:SetAttribute("BuildStage", "Architectural_Pass_03")
 station:SetAttribute("Note", "Stylized architectural reconstruction guided by photo references; proportions and details remain subject to in-game review.")
 print("[Simferopol] Detailed railway station generated.")
