@@ -52,8 +52,12 @@ local function block(name, x, y, z, sx, sy, sz, color, material)
 end
 
 local function cylinder(name, x, y, z, diameter, height, color, material, parent)
-    return part(name, Vector3.new(diameter, height, diameter), Vector3.new(x, y, z),
+    -- Roblox cylinder parts have their long axis along local X by default.
+    -- Rotate them so columns, trunks and fountain elements stand vertically.
+    local p = part(name, Vector3.new(diameter, height, diameter), Vector3.new(x, y, z),
         color, material, parent, Enum.PartType.Cylinder)
+    p.Orientation = Vector3.new(0, 0, 90)
+    return p
 end
 
 local function arch(name, cx, cy, z, radius, thickness, depth, color)
@@ -110,6 +114,7 @@ end
 block("Lantern roof", tx, 72, tz, 21, 1.4, 22, C.roof, Enum.Material.Slate)
 local spire = part("Clock tower spire", Vector3.new(3, 11, 3), Vector3.new(tx, 78, tz), C.bronze, Enum.Material.Metal)
 spire.Shape = Enum.PartType.Cylinder
+spire.Orientation = Vector3.new(0, 0, 90)
 block("Spire finial", tx, 84, tz, 1.2, 2, 1.2, C.bronze, Enum.Material.Metal)
 
 -- Four visible clock faces with raised bezels and hands.
